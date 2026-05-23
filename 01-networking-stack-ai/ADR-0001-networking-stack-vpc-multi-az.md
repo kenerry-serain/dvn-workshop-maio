@@ -1,15 +1,19 @@
 # ADR-0001: Networking Stack - VPC Multi-AZ com Subnets Publicas e Privadas
 
 ## Status
+
 Proposed
 
 ## Data
+
 2026-05-23
 
 ## Contexto
+
 O projeto dvn-workshop-maio necessita de uma stack de networking provisionada via Terraform que sirva como fundacao para workloads em AWS. A stack anterior (01-networking-stack) continha apenas uma VPC basica com CIDR 10.0.0.0/16, sem subnets, sem Internet Gateway, sem NAT Gateway e sem segmentacao de rede. Este ADR documenta as decisoes arquiteturais para uma nova stack (01-networking-stack-ai) que segue as melhores praticas do AWS Well-Architected Framework, validadas via AWS MCP Server (skill: creating-production-vpc-multi-az) e documentacao oficial da AWS.
 
 ## Drivers da Decisao
+
 - Necessidade de subnets publicas e privadas em multiplas AZs para alta disponibilidade
 - Boas praticas do AWS Well-Architected Framework validadas via AWS MCP
 - Segmentacao de rede para separar workloads publicos e privados
@@ -20,6 +24,7 @@ O projeto dvn-workshop-maio necessita de uma stack de networking provisionada vi
 ## Opcoes Consideradas
 
 ### Opcao A: VPC Simples (Single-AZ, sem subnets)
+
 - Pros:
   - Menor complexidade de IaC
   - Custo zero adicional (sem NAT Gateway)
@@ -32,6 +37,7 @@ O projeto dvn-workshop-maio necessita de uma stack de networking provisionada vi
 - Custo estimado: ~$0/mes (apenas VPC)
 
 ### Opcao B: VPC Multi-AZ com Subnets Publicas e Privadas (Recomendada)
+
 - Pros:
   - Alta disponibilidade com 2 AZs
   - Segmentacao clara entre tiers publico e privado
@@ -46,6 +52,7 @@ O projeto dvn-workshop-maio necessita de uma stack de networking provisionada vi
 - Custo estimado: ~$65-70/mes (2 NAT Gateways + 2 EIPs)
 
 ### Opcao C: VPC Multi-AZ com 3 AZs e NAT Gateway por AZ
+
 - Pros:
   - Maxima resiliencia (3 AZs)
   - Cada AZ com seu NAT Gateway (sem cross-AZ traffic)
@@ -55,6 +62,7 @@ O projeto dvn-workshop-maio necessita de uma stack de networking provisionada vi
 - Custo estimado: ~$97-105/mes (3 NAT Gateways + 3 EIPs)
 
 ## Decisao
+
 **Opcao B: VPC Multi-AZ com Subnets Publicas e Privadas em 2 AZs**
 
 Justificativa contra os 6 pilares do Well-Architected:
@@ -74,16 +82,19 @@ Justificativa contra os 6 pilares do Well-Architected:
 ## Consequencias
 
 ### Positivas:
+
 - Infraestrutura pronta para receber workloads com alta disponibilidade
 - Segmentacao de rede desde o inicio do projeto
 - Base solida para adicionar Security Groups, NACLs, VPC Endpoints em ADRs futuros
 - Terraform state organizado e auditavel
 
 ### Negativas / Trade-offs aceitos:
+
 - Custo mensal de ~$65-70/mes para NAT Gateways (aceito por ser necessario para acesso outbound das subnets privadas)
 - Complexidade adicional de IaC em comparacao com VPC simples
 
 ### Riscos e mitigacoes:
+
 - **Risco**: Exceder quota de EIPs na conta AWS. **Mitigacao**: Verificar quota antes do deploy.
 - **Risco**: CIDR overlap com outras VPCs da conta. **Mitigacao**: Usar CIDR 10.0.0.0/16 que e padrao e verificar conflitos.
 
@@ -137,6 +148,7 @@ graph TB
 - **Rollback strategy**: `terraform destroy` para remover todos os recursos
 
 ## Observabilidade e Day-2
+
 - **Metricas-chave**: NAT Gateway BytesProcessed, ActiveConnections, PacketsDropCount
 - **Alarmes recomendados**: NAT Gateway ErrorPortAllocation, pacotes dropped
 - **Dashboards**: CloudWatch dashboard com metricas de NAT Gateway
@@ -144,12 +156,14 @@ graph TB
 - **Backup e DR**: VPC e stateless; state do Terraform deve ser armazenado em S3 com versionamento
 
 ## Seguranca
-- **IAM**: Principio do least privilege para quem executa o Terraform (ec2:*, vpc:* scope minimo)
+
+- **IAM**: Principio do least privilege para quem executa o Terraform (ec2:_, vpc:_ scope minimo)
 - **Criptografia**: N/A para networking puro (relevante para VPC Flow Logs em ADR futuro)
 - **Network segmentation**: Subnets publicas isoladas das privadas via route tables. NACLs default (allow all) - restringir em ADR futuro.
 - **Logging e auditoria**: VPC Flow Logs recomendados como proximo ADR. CloudTrail captura chamadas de API de networking.
 
 ## Custo Estimado
+
 - **Mensal aproximado**: ~$65-70 USD
   - 2x NAT Gateway: 2 x $32.40 = $64.80/mes (custo fixo por hora)
   - 2x Elastic IP (em uso): $0/mes (sem custo quando associado a NAT GW)
@@ -162,6 +176,7 @@ graph TB
   - Avaliar NAT Instance (t4g.nano) para ambientes de dev/workshop (~$3/mes vs $32/mes)
 
 ## Referencias
+
 - AWS Well-Architected - Reliability Pillar: https://docs.aws.amazon.com/wellarchitected/latest/reliability-pillar/
 - AWS VPC Planning Guide: https://docs.aws.amazon.com/vpc/latest/userguide/vpc-getting-started.html
 - AWS MCP Skill: creating-production-vpc-multi-az (validado em 2026-05-23)

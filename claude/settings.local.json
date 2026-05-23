@@ -1,6 +1,10 @@
 {
   "permissions": {
     "allow": [
+      "Bash(env)",
+      "Bash(unset AWS_ENDPOINT_URL)",
+      "Bash(env -u AWS_ENDPOINT_URL localstack status)",
+      "Bash(zsh -i -c 'alias localstack')",
       "mcp__aws-mcp__aws___call_aws",
       "mcp__aws-mcp__aws___search_documentation",
       "mcp__aws-mcp__aws___read_documentation",
