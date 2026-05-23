@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__aws-mcp__aws___call_aws",
+      "mcp__aws-mcp__aws___search_documentation",
+      "mcp__aws-mcp__aws___read_documentation",
+      "mcp__aws-mcp__aws___retrieve_skill",
+      "mcp__terraform__search_modules"
+    ]
+  }
+}
