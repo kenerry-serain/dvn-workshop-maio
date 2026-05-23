@@ -16,7 +16,7 @@ Executa o pipeline completo de deploy para uma ou mais stacks Terraform:
 
 O projeto fica em `/Users/kenerry/Repositories/dvn-workshop-maio/`. As stacks são diretórios na raiz do projeto que:
 - Contêm arquivos `*.tf`
-- **Não** se chamam `remote-backend` ou qualquer variação (ex: `00-remote-backend`, `remote_backend`) — essas devem ser sempre ignoradas
+- **Não** se chamam `remote-backend` ou qualquer variação (ex: `00-remote-backend`, `remote_backend`, `01-remote-backend-stack-ai`, `00-remote-backend-stack-ai`) — essas devem ser sempre ignoradas
 
 Para listar as stacks disponíveis:
 ```bash

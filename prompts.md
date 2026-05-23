@@ -8,3 +8,8 @@ Refatore a stack de redes considerando o seguinte. Devemos ter 4 subnets, duaspu
 /skill-creator Crie uma skill terraform-deploy, para fazer o deploy de multiplas stacks. Quando parametrizado 01-networking-stack-ai, faça o deploy  
  somente desta stack, quando não parametrizado, faça o deploy de todas stacks. Antes do deploy, rode o terraform fmt, depois o validate, depois o plan e  
  printe o plan e depois o apply com auto-approve. Sempre ignore a stack de remote backend caso exista.
+
+## backend remoto
+
+@"devops-solution-architect (agent)" Crie um plano para criação de uma stack de backend remoto no s3. Use o terraform mcp server e defina
+melhores práticas. Depois vou usar esse backend remoto na stack

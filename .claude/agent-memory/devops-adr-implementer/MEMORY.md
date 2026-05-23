@@ -1,0 +1,1 @@
+- [ADR-0002 Remote Backend Stack](project_remote_backend.md) — S3 bucket for Terraform state; use_lockfile=true; no DynamoDB; state is local by design
