@@ -1,0 +1,2 @@
+- [ADR-0001 Networking Stack](project_networking_stack.md) — VPC stack in 01-networking-stack-ai/, foundational for EKS/RDS/ALB stacks
+- [Terraform Naming Conventions](feedback_naming_conventions.md) — mandatory file/resource/variable/output naming rules for all stacks in this project

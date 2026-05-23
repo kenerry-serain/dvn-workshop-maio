@@ -9,7 +9,12 @@
       "mcp__aws-mcp__aws___search_documentation",
       "mcp__aws-mcp__aws___read_documentation",
       "mcp__aws-mcp__aws___retrieve_skill",
-      "mcp__terraform__search_modules"
+      "mcp__terraform__search_modules",
+      "mcp__terraform__get_latest_provider_version",
+      "mcp__terraform__search_providers",
+      "Bash(terraform init:*)",
+      "Bash(terraform validate:*)",
+      "Bash(terraform fmt:*)"
     ]
   }
 }
