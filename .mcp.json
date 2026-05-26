@@ -1,0 +1,37 @@
+{
+    "mcpServers": {
+        "terraform": {
+            "command": "docker",
+            "args": [
+                "run",
+                "-i",
+                "--rm",
+                "hashicorp/terraform-mcp-server:0.5.2"
+            ]
+        },
+        "aws-mcp": {
+            "command": "uvx",
+            "args": [
+                "mcp-proxy-for-aws@latest",
+                "https://aws-mcp.us-east-1.api.aws/mcp",
+                "--metadata",
+                "AWS_REGION=us-east-1"
+            ]
+        },
+        "awslabs.eks-mcp-server": {
+            "command": "uv",
+            "args": [
+                "run",
+                "--with",
+                "awslabs.eks-mcp-server==0.1.31",
+                "python",
+                ".claude/scripts/eks_mcp_server_fixed.py",
+                "--allow-write",
+                "--allow-sensitive-data-access"
+            ],
+            "env": {
+                "FASTMCP_LOG_LEVEL": "ERROR"
+            }
+        }
+    }
+}

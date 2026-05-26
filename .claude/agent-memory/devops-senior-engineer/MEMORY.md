@@ -1,0 +1,5 @@
+- [ADR-0001 Networking Stack](project_networking_stack.md) — VPC stack in 01-networking-stack-ai/, foundational for EKS/RDS/ALB stacks
+- [ADR-0002 Remote Backend Stack](project_remote_backend.md) — S3 bucket for Terraform state; use_lockfile=true; no DynamoDB; state is local by design
+- [Terraform Naming Conventions](feedback_naming_conventions.md) — mandatory file/resource/variable/output naming rules for all stacks in this project
+- [ADR-0003 EKS Stack](project_eks_stack.md) — EKS cluster in 02-eks-stack-ai/; outputs and backend key for downstream stacks
+- [ADR-0004/0005/0006 CI/CD Stack](project_cicd_stack.md) — OIDC+IAM in 03-ci-cd-stack-ai/, ArgoCD Application CRD, GitHub Actions workflow; bootstrap steps required

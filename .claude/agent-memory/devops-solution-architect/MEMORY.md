@@ -1,0 +1,2 @@
+- [CI/CD Pipeline ADRs](project_cicd_pipeline_adrs.md) — ADRs 0004-0006: OIDC, GitHub Actions, ArgoCD GitOps
+- [AWS Account Info](project_aws_account_info.md) — Account 654654554686, us-east-1, EKS dvn-workshop-production, ECR repos
